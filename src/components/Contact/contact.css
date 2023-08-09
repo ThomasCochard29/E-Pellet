@@ -1,0 +1,63 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- Contact ----------------- */
+.contact-center-container {
+    display: flex;
+    justify-content: center;
+    height: 60vh;
+    font-family: "Mova";
+    margin: 10% 0;
+}
+
+.contact-container {
+    display: flex;
+    background-color: var(--var-green);
+    border-radius: 10px;
+    box-shadow: -27px -27px 60px var(--var-green),
+        27px 27px 60px var(--var-white),
+}
+
+.contact-box {
+    width: 40vw;
+    flex: 1;
+    height: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.contact-box-info {
+    border-right: 1px solid var(--var-green);
+}
+
+.contact-title {
+    align-self: center;
+    font-size: 50px;
+    color: var(--var-cream);
+    /* text-transform: uppercase; */
+    font-variant: small-caps;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 30%;
+}
+
+.contact-text {
+    font: 22px "Mova";
+    background-color: var(--var-brown);
+    color: transparent;
+    text-shadow: 1px 2px 2px var(--var-brown);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+}

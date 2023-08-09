@@ -1,0 +1,60 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- Produit ----------------- */
+.prod-center-container {
+    display: flex;
+    justify-content: center;
+    height: 90vh;
+    font-family: "Mova";
+}
+
+.prod-container {
+    background-color: var(--var-cream);
+    width: 36%;
+    height: auto;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10%;
+    box-shadow: 27px 27px 54px var(--var-brown);
+}
+
+.prod-title {
+    font-size: 60px;
+    margin-top: -12%;
+    color: var(--var-white);
+    /* text-transform: uppercase; */
+    font-variant: small-caps;
+}
+
+.prod-img {
+    width: 60%;
+}
+
+.prod-section-descrip {
+    display: flex;
+    margin-top: 10%;
+    align-items: center;
+}
+
+.prod-text {
+    font: 40px "Mova";
+    background-color: var(--var-green);
+    color: transparent;
+    text-shadow: 1px 2px 2px var(--var-green);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+}
+
+.prod-hr {
+    border-color: var(--var-green);
+    border-width: 2px;
+    border-style: solid;
+    height: 100px;
+}

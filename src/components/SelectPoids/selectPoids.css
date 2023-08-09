@@ -1,0 +1,64 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- Selection Poids ----------------- */
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    appearance: none;
+    outline: 0;
+    box-shadow: none;
+    border: 0 !important;
+    background: var(--var-brown);
+    background-image: none;
+    flex: 1;
+    padding: 0 .5em;
+    color: var(--var-cream);
+    cursor: pointer;
+    font-size: 1.1em;
+    font-family: "Mova";
+    height: 48px;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.select {
+    position: relative;
+    display: flex;
+    width: 12em;
+    height: 3em;
+    line-height: 3;
+    background: transparent;
+    overflow: hidden;
+    border-radius: .25em;
+}
+
+.select::after {
+    content: '\25BC';
+    transform: rotateZ(-90deg);
+    position: relative;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: var(--var-brown);
+    cursor: pointer;
+    pointer-events: none;
+    transition: .25s all ease;
+}
+
+.select:hover::after {
+    color: var(--var-green);
+}
+
+.select:focus::after{
+    transform: rotateZ(90deg);
+    transition: .25s all ease;
+}

@@ -1,0 +1,43 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- Histoire Entreprise ----------------- */
+.he-center-container {
+    display: flex;
+    justify-content: center;
+    height: 70vh;
+    font-family: "Mova";
+}
+
+.he-container {
+    background-color: var(--var-cream);
+    width: 36%;
+    height: 200px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10%;
+    box-shadow: 27px 27px 54px var(--var-brown);
+}
+
+.he-title {
+    font-size: 60px;
+    margin-top: -12%;
+    color: var(--var-white);
+    /* text-transform: uppercase; */
+    font-variant: small-caps;
+}
+
+.he-text {
+    font: 36px "Mova";
+    background-color: var(--var-brown);
+    color: transparent;
+    text-shadow: 1px 2px 2px var(--var-brown);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+}

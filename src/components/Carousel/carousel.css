@@ -1,0 +1,31 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- Carousel ----------------- */
+
+.indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.indicator {
+    width: 14px;
+    height: 14px;
+    background-color: var(--var-brown);
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+    /* z-index: 1; */
+    opacity: 0.4;
+}
+
+.indicator.active {
+    background-color: var(--var-green);
+    opacity: 1;
+}

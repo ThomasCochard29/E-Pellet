@@ -1,23 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useLocation } from "react-router-dom";
+
+// CSS
+import "./App.css";
+
+// Navigation
+import Navigation from "./components/Navigation";
 
 function App() {
+  const location = useLocation();
+
+  let contentMinHeight = "auto";
+
+  if (location.pathname !== "/") {
+    contentMinHeight = "100vh"; // Ajustez cette valeur en fonction de vos besoins
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className="linear-grad-back"
+      style={{
+        minHeight: contentMinHeight,
+        backgroundImage: location.pathname === "/certification" ? "url('../../assets/Image/bg-certifications.png')" : "",
+        backgroundSize: "cover"
+      }}
+    >
+      <Navigation />
     </div>
   );
 }

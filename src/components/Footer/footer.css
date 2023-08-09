@@ -1,0 +1,28 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- Footer ----------------- */
+footer {
+    background-color: var(--var-green);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    font-family: "Mova";
+    color: var(--var-cream);
+    font-size: 20px;
+    position: sticky;
+    bottom: 0;
+}
+
+.footer-rs {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}

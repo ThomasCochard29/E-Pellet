@@ -1,0 +1,51 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- Processus de Fabrication ----------------- */
+.process-center-container {
+    display: flex;
+    justify-content: center;
+    height: 80vh;
+    font-family: "Mova";
+}
+
+.process-container {
+    background-color: var(--var-brown);
+    width: 50%;
+    height: 200px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10%;
+    box-shadow: 27px 27px 54px var(--var-cream);
+}
+
+.process-title {
+    font-size: 60px;
+    margin-top: -6%;
+    color: var(--var-white);
+    /* text-transform: uppercase; */
+    font-variant: small-caps;
+}
+
+.process-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.process-img {
+    height: 100%;
+    margin: 0 -50px;
+}
+
+.process-hr {
+    border-color: var(--var-green);
+    border-width: 2px;
+    border-style: solid;
+    height: 200px;
+}

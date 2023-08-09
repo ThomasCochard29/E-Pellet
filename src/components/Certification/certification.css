@@ -1,0 +1,47 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- Certification ----------------- */
+.certif-center-container {
+    display: flex;
+    justify-content: center;
+    height: 80vh;
+    font-family: "Mova";
+}
+
+.certif-container {
+    background-image: url('../../assets/Image/bg-certifications.png');
+    background-size: cover;
+    width: 50%;
+    height: 200px;
+    border-radius: 10px;
+    text-align: center;
+    padding: 10%;
+    margin-top: 10%;
+    box-shadow: 27px 27px 54px var(--var-green);
+}
+
+.certif-title {
+    font-size: 60px;
+    margin: -8% 0 8% 0;
+    color: var(--var-white);
+    /* text-transform: uppercase; */
+    font-variant: small-caps;
+}
+
+.certif-section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+.certif-img {
+    margin-right: 4%;
+}
