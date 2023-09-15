@@ -10,8 +10,8 @@
 .he-center-container {
     display: flex;
     justify-content: center;
-    height: 70vh;
     font-family: "Mova";
+    margin-bottom: 10vw;
 }
 
 .he-container {

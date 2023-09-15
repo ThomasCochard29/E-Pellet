@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-// CSS
-import './selectPoids.css'
+// Redux
+import { isEmpty } from "../Utils.js";
 
-export default function SelectPoids({ onWeightChange }) {
-  const options = ["Selection du Poids","10", "50", "100"];
+// CSS
+import "./selectPoids.css";
+
+export default function SelectPoids({ onWeightChange, onCategoryChange, categories }) {
   const [selectedValue, setSelectedValue] = useState("Selection du Poids");
 
   const handleWeightChange = (selectedItem) => {
@@ -19,13 +21,22 @@ export default function SelectPoids({ onWeightChange }) {
   return (
     <div className="select">
       <select
-        onChange={(event) => handleWeightChange(event.target.value)}
+        onChange={(event) => {
+          handleWeightChange(event.target.value);
+          onCategoryChange(
+            event.target.selectedOptions[0].getAttribute("data-id")
+          );
+        }}
       >
-        {options.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
-          </option>
-        ))}
+        {/* Mapper les catégories aux options */}
+        {!isEmpty(categories)
+          ? categories?.map((category) => (
+              <option key={category.id_categ} value={category.nom_categ}>
+                {category.nom_categ}
+                {/* Supposons que vous avez un champ 'name' dans votre catégorie */}
+              </option>
+            ))
+          : ""}
       </select>
     </div>
   );

@@ -9,11 +9,7 @@ import imgCarouselB from "../../assets/Image/CarouselBB.jpg";
 import imgCarouselC from "../../assets/Image/CarouselCC.jpg";
 
 export default function Carousel() {
-  const images = [
-    imgCarouselA,
-    imgCarouselB,
-    imgCarouselC,
-  ];
+  const images = [imgCarouselA, imgCarouselB, imgCarouselC];
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -23,11 +19,11 @@ export default function Carousel() {
   };
 
   // Fonction pour passer à l'image précédente
-  const prevSlide = () => {
-    setCurrentIndex(
-      (prevIndex) => (prevIndex - 1 + images.length) % images.length
-    );
-  };
+  // const prevSlide = () => {
+  //   setCurrentIndex(
+  //     (prevIndex) => (prevIndex - 1 + images.length) % images.length
+  //   );
+  // };
 
   // Auto-play carousel
   useEffect(() => {

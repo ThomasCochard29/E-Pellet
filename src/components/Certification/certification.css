@@ -10,7 +10,6 @@
 .certif-center-container {
     display: flex;
     justify-content: center;
-    height: 80vh;
     font-family: "Mova";
 }
 

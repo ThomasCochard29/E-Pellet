@@ -9,6 +9,7 @@
 /*! ----------------- Produit ----------------- */
 .prod-center-container {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     height: 90vh;
     font-family: "Mova";
@@ -20,7 +21,7 @@
     height: auto;
     border-radius: 10px;
     text-align: center;
-    padding: 10%;
+    padding: 8% 10%;
     box-shadow: 27px 27px 54px var(--var-brown);
 }
 
@@ -44,9 +45,19 @@
 
 .prod-text {
     font: 40px "Mova";
-    background-color: var(--var-green);
+    background-color: var(--var-brown);
     color: transparent;
-    text-shadow: 1px 2px 2px var(--var-green);
+    text-shadow: 1px 2px 2px var(--var-brown);
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    background-clip: text;
+}
+
+.prod-text-descrip {
+    font: 30px "Mova";
+    background-color: var(--var-brown);
+    color: transparent;
+    text-shadow: 1px 2px 2px var(--var-brown);
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
@@ -57,4 +68,39 @@
     border-width: 2px;
     border-style: solid;
     height: 100px;
+}
+
+.section-btn-add-cart {
+    display: flex;
+    place-content: center;
+}
+
+.section-btn-add-cart .button {
+    display: block;
+    width: 14vw;
+    text-align: center;
+    font-size: 16px;
+    color: var(--var-cream);
+    background-color: var(--var-brown);
+    padding: 10px;
+    line-height: 1;
+    position: relative;
+    font-weight: 700;
+    border: none;
+    border-radius: 100px;
+}
+
+.section-btn-add-cart .button::after {
+    content: "🛒";
+    opacity: 0;
+    position: absolute;
+    right: 10;
+    top: 50%;
+    transform: translate(0, -50%);
+    transition: all 0.3s;
+}
+
+.section-btn-add-cart .button:hover::after {
+    transform: translate(5px, -50%);
+    opacity: 1;
 }

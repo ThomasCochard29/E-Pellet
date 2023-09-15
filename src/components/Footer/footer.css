@@ -19,6 +19,7 @@ footer {
     font-size: 20px;
     position: sticky;
     bottom: 0;
+    border-top: 2px solid var(--var-cream);
 }
 
 .footer-rs {

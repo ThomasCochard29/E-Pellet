@@ -1,14 +1,29 @@
 /*! ----------------- Color Var ----------------- */
 :root {
-  --var-green: rgba(116,154,112,1);
+  --var-green: rgba(116, 154, 112, 1);
   --var-cream: rgba(197, 178, 159, 1);
-  --var-brown: rgba(120,86,55,1);
-  --var-white: rgba(255,255,255,1);
+  --var-brown: rgba(120, 86, 55, 1);
+  --var-white: rgba(255, 255, 255, 1);
 }
 
 /*! ----------------- App ----------------- */
 
+body {
+  font-family: "Mova";
+}
+
 .linear-grad-back {
   background: rgb(116, 154, 112);
   background: linear-gradient(180deg, rgba(116, 154, 112, 1) 19%, rgba(197, 178, 159, 1) 80%);
+}
+
+/*! ----------------- TOASTIFY ----------------- */
+
+.Toastify__toast-theme--light {
+  background-color: var(--var-cream) !important;
+  color: var(--var-white) !important;
+}
+
+.Toastify__progress-bar {
+  background: var(--var-green) !important;
 }

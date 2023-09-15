@@ -1,0 +1,246 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- MENU ADMIN ----------------- */
+.container {
+    display: flex;
+    margin-left: 0;
+    margin-right: 0;
+    min-width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background: var(--var-cream);
+}
+
+.nav-admin {
+    width: 300px;
+    min-height: 100vh;
+    background: var(--var-green);
+    text-decoration: none;
+}
+
+.div-logo-admin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-admin {
+    width: 5vw;
+    min-width: 2vw;
+    max-width: 10vw;
+    margin: 2vh 0;
+}
+
+.nav-admin .li-admin {
+    display: flex;
+    flex-direction: column;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    text-decoration: none;
+}
+
+.ul-admin {
+    display: flex;
+    margin-left: -4vw;
+    margin-top: 4vh;
+    text-decoration: none;
+}
+
+.li-admin {
+    margin-right: 20px;
+    position: relative;
+}
+
+a {
+    text-decoration: none;
+}
+
+.a-admin {
+    color: var(--var-cream);
+    display: flex;
+}
+
+.a-admin-panel {
+    color: var(--var-white);
+}
+
+.a-admin p {
+    margin-left: 10px;
+    font: "Mova";
+}
+
+.icon-submenu {
+    position: relative;
+    top: 20px;
+    left: 130px;
+}
+
+.menu-item {
+    cursor: pointer;
+}
+
+/* Styles des sous-menus */
+.sous-menu {
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+    margin: 0px 40px;
+    padding: 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px var(--var-cream);
+    z-index: 1;
+}
+
+.sous-menu-item {
+    padding: 10px 10px;
+}
+
+.sous-menu-item:hover,
+.sous-menu-item:hover a {
+    background-color: var(--var-cream);
+    color: var(--var-brown);
+}
+
+.sous-menu-li-admin {
+    color: var(--var-green)
+}
+
+.sous-menu-link-admin {
+    color: var(--var-green);
+    font-weight: bold;
+}
+
+/*! ----------------- CONTENT ADMIN ----------------- */
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.section-btn-add {
+    margin-bottom: 10px;
+}
+
+/*! ----------------- SEARCH ----------------- */
+.section-search {
+    position: absolute;
+    top: 2%;
+    right: 18%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: var(--var-green);
+    border-radius: 14px;
+    width: 60%;
+    height: auto;
+}
+
+.search-input {
+    color: var(--var-cream) !important;
+}
+
+/*! ----------------- ADD CATEGORIE ----------------- */
+.round {
+    position: relative;
+}
+
+.round label {
+    background-color: var(--var-brown);
+    border: 1px solid var(--var-brown);
+    border-radius: 50%;
+    cursor: pointer;
+    height: 14px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 14px;
+}
+
+.round input[type="checkbox"] {
+    visibility: hidden;
+}
+
+.round input[type="checkbox"]:checked+label {
+    background-color: var(--var-cream);
+    border-color: var(--var-cream);
+}
+
+.method-payement {
+    padding-left: 20px;
+}
+
+.btn-add-style:hover {
+    background-color: var(--var-cream) !important;
+}
+
+.btn-add-style:last-child:hover {
+    background-color: var(--var-brown) !important;
+}
+
+.select-add-categ-option .MuiMenuItem-paper {
+    background-color: var(--var-brown);
+}
+
+/*! ----------------- USER ----------------- */
+.css-1sb0z0s-MuiChartsSurface-root {
+    --ChartsLegend-itemWidth: 100px;
+    --ChartsLegend-itemMarkSize: 20px;
+    --ChartsLegend-rootSpacing: 5px;
+    --ChartsLegend-labelSpacing: -20px !important;
+    --ChartsLegend-rootOffsetY: -20px;
+}
+
+.css-nq2z8j-MuiChartsLegend-mark {
+    x: -30 !important;
+    width: var(--ChartsLegend-itemMarkSize);
+    height: var(--ChartsLegend-itemMarkSize);
+    fill: #02B2AF;
+}
+
+.css-hbowm0-MuiChartsLegend-mark {
+    x: -30 !important;
+    y: 0;
+    width: var(--ChartsLegend-itemMarkSize);
+    height: var(--ChartsLegend-itemMarkSize);
+    fill: #02B2AF;
+}
+
+.diagramme-user {
+    background-color: var(--var-green);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/*! ----------------- CARD ----------------- */
+.card-body {
+    min-width: 220px;
+    background-color: var(--var-green) !important;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.card-div-icon {
+    margin-bottom: 20px;
+}
+
+.card-icon {
+    border-radius: 100px;
+}
+
+.card-typo-number {
+    margin-bottom: 10px !important;
+}

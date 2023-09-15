@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 // CSS
@@ -6,9 +6,35 @@ import "./navBar.css";
 
 // Image
 import logoSvg from "../../assets/Image/PEFC_Logo.png";
+import IconLogin from "../../assets/icon/icons8-utilisateur-60.png";
+import IconAdmin from "../../assets/icon/admin.png";
+import IconShoppingCart from "../../assets/icon/shopping-sac.png";
+
+// Component
+import Logout from "../User/Logout.js";
+
+// Redux
+import { useSelector } from "react-redux";
 
 export default function NavBar() {
+  // État local pour stocker les produits du panier
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    // Récupérer le panier depuis le stockage local
+    const cartFromLocalStorage = JSON.parse(localStorage.getItem("panier"));
+
+    if (cartFromLocalStorage) {
+      // Mettre à jour l'état local avec les produits du panier
+      setCart(cartFromLocalStorage);
+    }
+  }, []);
+
   const location = useLocation();
+  const isAuthenticated = useSelector(
+    (state) => state.authReducer.isAuthenticated
+  );
+  const isAdmin = useSelector((state) => state.authReducer.user?.role_client);
 
   const lienMenu = [
     {
@@ -49,13 +75,69 @@ export default function NavBar() {
   ));
 
   return (
-    <nav className="nav">
+    <nav
+      className="nav"
+      style={
+        location.pathname === "/admin" ||
+        location.pathname === "/admin/datagrid-produit" ||
+        location.pathname === "/admin/add-produit" ||
+        location.pathname === "/admin/datagrid-categorie" ||
+        location.pathname === "/admin/add-categorie" ||
+        location.pathname === "/admin/commande" ||
+        location.pathname === "/admin/user-admin"
+          ? { display: "none" }
+          : {}
+      }
+    >
       <Link to={"/"} className="logoNav">
         <img src={logoSvg} alt="logo Pellet" width={70} />
       </Link>
 
-      <ul>
+      <ul style={{ alignItems: "center" }}>
         <li className="nav-item d-flex">{mesLiens}</li>
+        {!isAuthenticated && (
+          <Link to="/login" className="nav-link">
+            <NavLinkWithBorder isActive={location.pathname === "/login"} />
+            <img
+              src={IconLogin}
+              alt="Icon User Login"
+              style={{ width: "50px" }}
+            />
+          </Link>
+        )}
+        {isAuthenticated && isAdmin === "admin" && (
+          <Link to="/admin" className="nav-link">
+            <NavLinkWithBorder isActive={location.pathname === "/login"} />
+            <img
+              src={IconAdmin}
+              alt="Icon User Login"
+              style={{ width: "50px" }}
+            />
+          </Link>
+        )}
+        <Logout />
+        <Link to="/shopping-cart" className="nav-link">
+          <NavLinkWithBorder isActive={location.pathname === "/login"} />
+          <img
+            src={IconShoppingCart}
+            alt="Icon User Login"
+            style={{ width: "50px" }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: "2vw",
+              right: "0.2vw",
+              backgroundColor: "var(--var-brown)",
+              color: "white",
+              borderRadius: "50%",
+              padding: "5px 10px",
+              fontSize: "16px",
+            }}
+          >
+            {cart.length}
+          </div>
+        </Link>
       </ul>
     </nav>
   );
@@ -69,15 +151,6 @@ function NavLinkWithBorder({ isActive, text }) {
         borderBottom: isActive ? "3px solid rgba(116, 154, 112, 1)" : "",
         transition: "border-bottom 0.3s linear",
         color: isActive ? "rgba(116, 154, 112, 1)" : "rgba(120, 86, 55, 1)",
-        textDecoration: "none",
-        fontSize: "24px",
-        fontWeight: "500",
-        padding: "8px 8px",
-        letterSpacing: "1px",
-        fontFamily: "Mova",
-        textTransform: "capitalize",
-        position: "relative",
-        overflow: "hidden",
       }}
     >
       {text}

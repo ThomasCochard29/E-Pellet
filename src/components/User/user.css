@@ -1,0 +1,189 @@
+/*! ----------------- Color Var ----------------- */
+:root {
+    --var-green: rgba(116, 154, 112, 1);
+    --var-cream: rgba(197, 178, 159, 1);
+    --var-brown: rgba(120, 86, 55, 1);
+    --var-white: rgba(255, 255, 255, 1);
+}
+
+/*! ----------------- USER ----------------- */
+.div-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+
+.section-primary-register-login {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.div-primary-register-login {
+    flex: 1;
+    text-align: center;
+}
+
+.div-primary-register-login:nth-child(1) {
+    margin-right: 6%;
+}
+
+h2 {
+    color: var(--var-white);
+}
+
+/*? Login */
+.form-register-login {
+    display: "flex";
+    flex-direction: "column";
+    align-items: "center";
+}
+
+.label-login {
+    color: var(--var-white);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.input-login {
+    border: 2px solid rgba(197, 178, 159, 0.50);
+    padding: 10px;
+    background-color: rgba(120, 86, 55, 0.50);
+    width: 362px;
+    height: 26px;
+    border-radius: 10px;
+    color: var(--var-cream);
+}
+
+.input-login::placeholder {
+    color: var(--var-cream);
+    font-family: "Mova";
+    font-size: 16px;
+}
+
+/*? Register */
+.section-register {
+    display: flex;
+}
+
+.div-register-right {
+    padding-left: 20px;
+}
+
+.label-register {
+    font-size: 18px;
+    color: var(--var-white);
+}
+
+.input-register {
+    border: 2px solid rgba(197, 178, 159, 0.50);
+    padding: 10px;
+    background-color: rgba(120, 86, 55, 0.50);
+    width: 181px;
+    height: 13px;
+    border-radius: 10px;
+    color: var(--var-cream);
+}
+
+.input-register::placeholder {
+    color: var(--var-cream);
+    font-family: "Mova";
+    font-size: 16px;
+}
+
+.div-checkbox-register {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.checkbox-radio-pro-par {
+    position: relative;
+    top: 10px;
+    display: flex;
+}
+
+.div-checkbox-register .parCheckbox {
+    margin-left: 8px;
+}
+
+.section-password .div-register-right .input-register::placeholder,
+.section-tel-pro-par .input-register::placeholder,
+.section-rue-ville .input-register-numero-rue::placeholder {
+    font-size: 12px;
+}
+
+.div-checkbox-register .round .checkboxProPar[type="radio"] {
+    visibility: hidden;
+}
+
+.div-checkbox-register .round .checkboxProPar[type="radio"]:checked+label {
+    background-color: var(--var-green);
+    border-color: var(--var-green);
+}
+
+.btn-style {
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-family: "Mova" !important;
+    margin-top: 20px !important;
+    padding: 10px 100px !important;
+}
+
+.btn-register-style {
+    color: var(--var-cream) !important;
+    background-color: var(--var-brown) !important;
+    filter: drop-shadow(8px 6px 8px var(--var-brown)) !important;
+}
+
+.btn-login-style {
+    color: var(--var-brown) !important;
+    background-color: var(--var-cream) !important;
+    filter: drop-shadow(8px 6px 8px var(--var-cream)) !important;
+}
+
+.btn-register-style:hover {
+    background-color: var(--var-brown) !important;
+}
+
+.btn-login-style:hover {
+    background-color: var(--var-cream) !important;
+}
+
+.btn-modal-adress-style {
+    color: var(--var-brown) !important;
+    background-color: var(--var-cream) !important;
+    filter: drop-shadow(8px 6px 8px var(--var-cream)) !important;
+    font-size: 12px !important;
+    margin-top: 0 !important;
+    padding: 8px 34px !important;
+}
+
+/*? Password Icon */
+.div-show-hide-password {
+    position: relative;
+    bottom: 4.3vh;
+    left: 20vw;
+    width: 6%;
+}
+
+.div-show-hide-register-password {
+    position: relative;
+    bottom: 4.3vh;
+    left: 20vw;
+    width: 6%;
+}
+
+.div-show-hide-confirm-password {
+    position: relative;
+    bottom: 4.3vh;
+    left: 20vw;
+    width: 6%;
+}
+
+.img-eye-password {
+    width: 40px;
+}

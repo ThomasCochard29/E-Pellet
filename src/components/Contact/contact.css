@@ -6,11 +6,10 @@
     --var-white: rgba(255, 255, 255, 1);
 }
 
-/*! ----------------- Contact ----------------- */
+/*! ----------------- CONTACT INFORMATION ----------------- */
 .contact-center-container {
     display: flex;
     justify-content: center;
-    height: 60vh;
     font-family: "Mova";
     margin: 10% 0;
 }
@@ -26,7 +25,7 @@
 .contact-box {
     width: 40vw;
     flex: 1;
-    height: auto;
+    height: 60vh;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -60,4 +59,52 @@
     -webkit-background-clip: text;
     -moz-background-clip: text;
     background-clip: text;
+}
+
+/*! ----------------- CONTACT ENVOI EMAIL ----------------- */
+
+.section-contact-email {
+    display: flex;
+    place-content: center;
+    height: 70vh;
+    position: relative;
+    top: 120px;
+}
+
+.titre-contact-email {
+    font: 40px "Mova";
+    margin: 10px 0px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.input-contact-email {
+    border: 2px dashed var(--var-brown);
+    padding: 10px;
+    background-color: var(--var-cream);
+    flex-wrap: wrap;
+    width: 362px;
+    height: 26px;
+    border-radius: 10px;
+    margin: 16px 0px;
+}
+
+.input-contact-email::placeholder {
+    font: 18px "Mova";
+    color: var(--var-brown);
+}
+
+.div-btn-contact-email {
+    display: flex;
+    place-content: center;
+}
+
+.btn-contact-email {
+    font: 16px "Mova" !important;
+    background: var(--var-brown) !important;
+    color: var(--var-cream) !important;
+    border-radius: 4px !important;
+    filter: drop-shadow(8px 4px 10px) !important;
+    padding: 10px 0px !important;
+    width: 100px !important;
 }

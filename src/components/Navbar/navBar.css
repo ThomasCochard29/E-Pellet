@@ -13,6 +13,10 @@
     background-color: var(--var-cream);
     align-items: center;
     justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 2px solid var(--var-green);
 }
 
 .logoNav {
@@ -31,17 +35,15 @@ nav ul {
     flex-wrap: wrap;
     list-style: none;
     position: relative;
-    left: 16%;
+    left: 14%;
 }
 
 .nav-link {
-    color: var(--var-brown);
     text-decoration: none;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 500;
     padding: 8px 8px;
     letter-spacing: 1px;
-    transition: all 0.3s ease;
     font-family: "Mova";
     text-transform: capitalize;
     position: relative;

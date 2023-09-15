@@ -8,7 +8,13 @@ export default function HistoireEntreprise() {
   const location = useLocation();
 
   return (
-    <div className="he-center-container">
+    <div
+      className="he-center-container"
+      style={{
+        marginTop: location.pathname === "/" ? "-4vw" : "",
+        height: location.pathname === "/" ? "" : "63.3vh",
+      }}
+    >
       <div
         className="he-container"
         style={{

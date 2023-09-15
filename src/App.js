@@ -20,8 +20,11 @@ function App() {
       className="linear-grad-back"
       style={{
         minHeight: contentMinHeight,
-        backgroundImage: location.pathname === "/certification" ? "url('../../assets/Image/bg-certifications.png')" : "",
-        backgroundSize: "cover"
+        backgroundImage:
+          location.pathname === "/certification"
+            ? "url('../../assets/Image/bg-certifications.png')"
+            : "",
+        backgroundSize: "cover",
       }}
     >
       <Navigation />
