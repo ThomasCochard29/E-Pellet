@@ -28,7 +28,7 @@ export default function Order() {
 
         {/* Card Order */}
         <section
-          style={{ display: "flex", position: "relative", bottom: "10%" }}
+          className="section-card-order"
         >
           {/* Completed */}
           <CardCompleted />

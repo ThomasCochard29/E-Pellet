@@ -9,21 +9,27 @@ import Produit from "../components/Produit/Produit";
 import Certification from "../components/Certification/Certification";
 import Contact from "../components/Contact/Contact";
 import Footer from "./Footer/Footer.js";
+
 //? Admin
 import DatagridProduit from "./Admin/Produit/DatagridProduit.js";
+import DatagridCategorie from "./Admin/Categorie/DatagridCategorie.js";
+import AddCategorie from "./Admin/Categorie/AddCategorie.js";
+import AddProduit from "./Admin/Produit/AddProduit.js";
+import UserAdmin from "./Admin/User/UserAdmin.js";
+import Order from "./Admin/Order/Order.js";
 
 // Page
 import HomePage from "../pages/HomePage.js";
 import Admin from "../pages/Admin.js";
-import DatagridCategorie from "./Admin/Categorie/DatagridCategorie.js";
-import AddCategorie from "./Admin/Categorie/AddCategorie.js";
-import AddProduit from "./Admin/Produit/AddProduit.js";
 import Login from "./User/Login.js";
-import PrivateRoute from "./PrivateRoute.js";
-import Order from "./Admin/Order/Order.js";
-import UserAdmin from "./Admin/User/UserAdmin.js";
 import SearchDetail from "./Admin/SearchDetail.js";
 import ShoppingCart from "./ShoppingCart/ShoppingCart.js";
+import CheckoutSuccess from "./Stripe/CheckoutSuccess.js";
+import Profile from "./User/Profile.js";
+
+// PrivateRoute
+import PrivateRoute from "./PrivateRoute.js";
+import PrivateRouteNoAuthentificated from "./PrivateRouteNoAuthentificated.js";
 
 export default function Navigation() {
   return (
@@ -55,6 +61,15 @@ export default function Navigation() {
             </PrivateRoute>
           }
         />
+        <Route
+          exact
+          path="/profile"
+          element={
+            <PrivateRouteNoAuthentificated>
+              <Profile />
+            </PrivateRouteNoAuthentificated>
+          }
+        />
         <Route exact path="/admin" element={<Admin />} />
         <Route
           exact
@@ -71,6 +86,7 @@ export default function Navigation() {
         <Route exact path="/admin/commande" element={<Order />} />
         <Route exact path="/admin/user-admin" element={<UserAdmin />} />
         <Route exact path="/produit/:id_prod" element={<SearchDetail />} />
+        <Route exact path="/success" element={<CheckoutSuccess />} />
       </Routes>
       <Footer />
     </>

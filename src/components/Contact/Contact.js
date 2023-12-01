@@ -13,8 +13,6 @@ import IconSend from "../../assets/icon/paper-plane.gif";
 
 export default function Contact() {
   const location = useLocation();
-  const pFont = { fontSize: location.pathname === "/contact" ? "30px" : "" };
-
   const form = useRef();
 
   // État local pour suivre les valeurs des champs du formulaire
@@ -100,27 +98,26 @@ export default function Contact() {
             className="contact-container"
             style={{
               background: location.pathname === "/contact" ? "none" : "",
-              alignSelf: "center",
             }}
           >
             <div className="contact-box contact-box-info">
-              <h2 className="contact-title" style={{ alignContent: "center" }}>
+              <h2 className="contact-title">
                 Ou Nous Trouver ?
               </h2>
-              <section className="contact-info" style={{ width: "300px" }}>
-                <p className="contact-text" style={pFont}>
+              <section className="contact-info">
+                <p className="contact-text">
                   Nom de L'entreprise
                 </p>
-                <p className="contact-text" style={pFont}>
+                <p className="contact-text">
                   Adresse Siege
                 </p>
-                <p className="contact-text" style={pFont}>
+                <p className="contact-text">
                   Code Postal - Pays
                 </p>
-                <p className="contact-text" style={pFont}>
+                <p className="contact-text">
                   Numéro de Telephone
                 </p>
-                <p className="contact-text" style={pFont}>
+                <p className="contact-text">
                   Email
                 </p>
               </section>

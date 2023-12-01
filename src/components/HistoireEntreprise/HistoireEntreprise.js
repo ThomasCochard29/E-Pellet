@@ -12,7 +12,7 @@ export default function HistoireEntreprise() {
       className="he-center-container"
       style={{
         marginTop: location.pathname === "/" ? "-4vw" : "",
-        height: location.pathname === "/" ? "" : "63.3vh",
+        height: location.pathname === "/" ? "" : "62.8vh",
       }}
     >
       <div

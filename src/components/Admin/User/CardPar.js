@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
-import axios from "axios";
+import API from "../../../actions/api";
 
 // Image
 import IconCustomer from "../../../assets/icon/customer.png";
@@ -9,8 +9,7 @@ export default function CardPar() {
   const [userDataPar, setUserDataPar] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/client/particulier")
+    API.get("/client/particulier")
       .then((res) => {
         setUserDataPar(res.data);
       })

@@ -38,6 +38,7 @@
 }
 
 .process-img {
+    width: 220px;
     height: 100%;
     margin: 0 -50px;
 }
@@ -47,4 +48,24 @@
     border-width: 2px;
     border-style: solid;
     height: 200px;
+}
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) {
+    .process-center-container {
+        height: 67.5vh !important;
+    }
+
+    .process-container {
+        width: 40%;
+    }
+
+    .process-img {
+        width: 200px;
+        height: 100%;
+        margin: 0 -50px;
+    }
+
+    .process-hr {
+        height: 180px;
+    }
 }

@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { withCookies } from "react-cookie";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import * as yup from "yup";
+import ReCAPTCHA from "react-google-recaptcha";
 
 // CSS
 import "./user.css";
@@ -17,21 +19,32 @@ import IconClear from "../../assets/icon/eraser.png";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, registerUser } from "../../actions/auth.action";
 
-const Login = ({ cookies }) => {
-  const styleModal = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    boxShadow: 24,
-    textAlign: "center",
-    backgroundColor: "var(--var-cream)",
-    height: "70%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  };
+const schemaRegister = yup.object().shape({
+  nom_client: yup.string().required("Le nom est requis"),
+  prenom_client: yup.string().required("Le prénom est requis"),
+  email_client: yup
+    .string()
+    .email("Entrez une adresse e-mail valide")
+    .required("L'e-mail est requis"),
+  password_client: yup.string().required("Le mot de passe est requis"),
+  // numero_rue: yup.string().required("Le numéro de rue est requis"),
+  // ville: yup.string().required("La ville est requise"),
+  // code_postal: yup.string().required("Le code postal est requis"),
+  // region: yup.string().required("La région est requise"),
+  // pays: yup.string().required("Le pays est requis"),
+  // rue: yup.string().required("Le nom de la rue est requis"),
+  // numero_tel: yup.string().required("Le numéro de téléphone est requis"),
+});
 
+const schemaLogin = yup.object().shape({
+  emailLogin: yup
+    .string()
+    .email("Entrez une adresse e-mail valide")
+    .required("L'e-mail est requis"),
+  passwordLogin: yup.string().required("Le mot de passe est requis"),
+});
+
+const Login = ({ cookies }) => {
   //! ----------------- REGISTER -----------------
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [adressRegister, setAdressRegister] = useState({
@@ -42,10 +55,7 @@ const Login = ({ cookies }) => {
     pays: "",
     rue: "",
   });
-  const [infoRegister, setInfoRegister] = useState({
-    professionnel_info: false,
-    particulier_info: false,
-  });
+  // console.log(adressRegister);
   const [telephoneRegister, setTelephoneRegister] = useState({
     numero_tel: "",
   });
@@ -54,19 +64,10 @@ const Login = ({ cookies }) => {
     prenom_client: "",
     email_client: "",
     password_client: "",
+    is_professionnel: 0,
     adresse: adressRegister,
-    telephones: "",
-    informations: infoRegister,
+    telephones: telephoneRegister,
   });
-
-  // Fonction pour le choix Professionnel / Particulier
-  const handleRadioChange = (fieldName) => {
-    setInfoRegister((prevInfo) => ({
-      ...prevInfo,
-      professionnel_info: fieldName === "professionnel",
-      particulier_info: fieldName === "particulier",
-    }));
-  };
 
   // Vérification du password
   const [password, setPassword] = useState("");
@@ -79,7 +80,8 @@ const Login = ({ cookies }) => {
     const match = event.target.value === confirmPassword;
     setPasswordsMatch(match);
 
-    // Mettre à jour le mot de passe du clientRegister si les mots de passe correspondent
+    // Mettre à jour le mot de passe du clientRegister si les mots de passe
+    // correspondent
     if (match) {
       setClientRegister((prevClient) => ({
         ...prevClient,
@@ -99,7 +101,8 @@ const Login = ({ cookies }) => {
     const match = event.target.value === password;
     setPasswordsMatch(match);
 
-    // Mettre à jour le mot de passe du clientRegister si les mots de passe correspondent
+    // Mettre à jour le mot de passe du clientRegister si les mots de passe
+    // correspondent
     if (match) {
       setClientRegister((prevClient) => ({
         ...prevClient,
@@ -113,8 +116,8 @@ const Login = ({ cookies }) => {
     }
   };
 
-  // Fonction du Modal pour l'Adresse
-  //? Fonction pour la Fermeture du Modal / PopUp
+  // Fonction du Modal pour l'Adresse ? Fonction pour la Fermeture du Modal /
+  // PopUp
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
@@ -124,17 +127,14 @@ const Login = ({ cookies }) => {
     setClientRegister((prevClient) => ({
       ...prevClient,
       adresse: adressRegister,
-      informations: infoRegister,
       telephones: telephoneRegister,
     }));
-  }, [adressRegister, infoRegister, telephoneRegister]);
+  }, [adressRegister, telephoneRegister]);
 
-  // console.log("passsword :" + password);
-  // console.log("confirmPassword :" + confirmPassword);
-  // console.log("passwordMatch :" + passwordsMatch);
+  // console.log("passsword :" + password); console.log("confirmPassword :" +
+  // confirmPassword); console.log("passwordMatch :" + passwordsMatch);
   // console.log("passwordClient :" + clientRegister.password_client);
-  // console.log(clientRegister);
-  // console.log(infoRegister);
+  // console.log(clientRegister); console.log(infoRegister);
   // console.log(adressRegister);
 
   const handleClear = () => {
@@ -143,13 +143,11 @@ const Login = ({ cookies }) => {
       prenom_client: "",
       email_client: "",
       password_client: "",
+      is_professionnel: false,
       adresse: adressRegister,
       telephones: telephoneRegister,
-      informations: infoRegister,
     });
-    setTelephoneRegister({
-      numero_tel: "",
-    });
+    setTelephoneRegister({ numero_tel: "" });
     setAdressRegister({
       numero_rue: "",
       ville: "",
@@ -158,38 +156,81 @@ const Login = ({ cookies }) => {
       pays: "",
       rue: "",
     });
-    setInfoRegister({
-      professionnel_info: false,
-      particulier_info: false,
-    });
+    setConfirmPassword("");
+    setPassword("");
+    setPasswordsMatch(false);
+
     toast(
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
         <img
           src={IconClear}
-          alt="Icon de l'ajout' du produit"
+          alt="Icon d'effacement des champs"
           width={40}
-          style={{ paddingRight: "4px" }}
+          style={{
+            paddingRight: "4px",
+          }}
         />
-        <p style={{ fontSize: "15px" }}>Tous les champs on était effacé!</p>
+        <p
+          style={{
+            fontSize: "15px",
+          }}
+        >
+          Tous les champs on était effacé!
+        </p>
       </div>
     );
   };
 
+  const [validationErrors, setValidationErrors] = useState({});
+
   // Fonction Submit pour le Register
-  const handleSubmitRegister = (e) => {
+  const handleSubmitRegister = async (e) => {
     e.preventDefault();
 
-    dispatch(registerUser(clientRegister));
+    try {
+      await schemaRegister.validate(clientRegister, { abortEarly: false });
+      console.log(clientRegister);
 
-    console.log("Inscription Réussie");
-    toast.success("Inscription Réussie ! Vous pouvez allez vous connecter");
-    handleClear();
+      dispatch(registerUser(clientRegister));
+
+      console.log("Inscription Réussie");
+      toast.success("Inscription Réussie ! Vous pouvez aller vous connecter");
+      handleClear();
+    } catch (error) {
+      if (error instanceof yup.ValidationError) {
+        const errors = {};
+        error.inner.forEach((err) => {
+          errors[err.path] = err.message;
+        });
+        setValidationErrors(errors); // Mettre à jour les erreurs de validation
+        console.log("Erreurs de validation:", errors);
+      } else {
+        console.error("Erreur lors de l'inscription:", error);
+      }
+    }
   };
 
   //! ----------------- LOGIN -----------------
   const [emailLogin, setEmailLogin] = useState("");
   const [passwordLogin, setPasswordLogin] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [clientLogin, setClientLogin] = useState({
+    emailLogin: emailLogin,
+    passwordLogin: passwordLogin,
+  });
+  const [capVal, setCapVal] = useState();
+
+  useEffect(() => {
+    setClientLogin({
+      emailLogin: emailLogin,
+      passwordLogin: passwordLogin,
+    });
+  }, [emailLogin, passwordLogin]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -203,6 +244,9 @@ const Login = ({ cookies }) => {
     e.preventDefault();
 
     try {
+      await schemaLogin.validate(clientLogin, {
+        abortEarly: false,
+      });
       const response = await dispatch(
         loginUser({ email_client: emailLogin, password_client: passwordLogin })
       );
@@ -218,17 +262,27 @@ const Login = ({ cookies }) => {
 
       console.log("Connecté");
 
-      toast.success("Vous êtes Connecté");
       navigate("/");
+      toast.success("Vous êtes Connecté");
     } catch (error) {
-      console.error("Erreur lors de la connexion:", error);
-      // Gérez les erreurs d'authentification ici
+      if (error instanceof yup.ValidationError) {
+        const errors = {};
+        error.inner.forEach((err) => {
+          errors[err.path] = err.message;
+        });
+        setValidationErrors(errors); // Mettre à jour les erreurs de validation
+        setCapVal();
+      } else {
+        toast.error("Email ou mot de passe incorrect");
+        console.error("Erreur lors de la connexion:", error);
+        setCapVal();
+      }
     }
+    setCapVal();
   };
 
-  //? Cookie
-  // const [cookie] = useCookies(["access_token"]);
-  // console.log("Contenu du cookie access_token:", cookie["access_token"]);
+  // ? Cookie const [cookie] = useCookies(["access_token"]); console.log("Contenu
+  // du cookie access_token:", cookie["access_token"]);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -247,6 +301,13 @@ const Login = ({ cookies }) => {
         <div
           className="div-primary-register-login"
           onSubmit={handleSubmitRegister}
+          style={
+            validationErrors.nom_client
+              ? {
+                  marginBottom: "-10%",
+                }
+              : null
+          }
         >
           <h2>Register</h2>
           <form className="form-register-login">
@@ -265,6 +326,15 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.nom_client && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.nom_client}
+                  </p>
+                )}
               </div>
               <div className="div-register-right">
                 <p className="label-register">Prenom</p>
@@ -280,6 +350,15 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.prenom_client && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.prenom_client}
+                  </p>
+                )}
               </div>
             </section>
             <section className="section-email-adresse section-register">
@@ -297,26 +376,98 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.email_client && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.email_client}
+                  </p>
+                )}
               </div>
-              <div className="div-register-right">
-                <p className="label-register">Adresse</p>
+              <div
+                className="div-register-right"
+                style={
+                  validationErrors.numero_rue ||
+                  validationErrors.ville ||
+                  validationErrors.code_postal ||
+                  validationErrors.region ||
+                  validationErrors.pays ||
+                  validationErrors.rue
+                    ? {
+                        marginRight: "-100%",
+                      }
+                    : null
+                }
+              >
+                <p
+                  className="label-register"
+                  style={
+                    validationErrors.numero_rue ||
+                    validationErrors.ville ||
+                    validationErrors.code_postal ||
+                    validationErrors.region ||
+                    validationErrors.pays ||
+                    validationErrors.rue
+                      ? {
+                          marginLeft: "-20%",
+                        }
+                      : null
+                  }
+                >
+                  Adresse
+                </p>
                 <Button
                   className="btn-style btn-modal-adress-style"
                   onClick={() => setIsModalOpen(true)}
+                  style={
+                    validationErrors.numero_rue ||
+                    validationErrors.ville ||
+                    validationErrors.code_postal ||
+                    validationErrors.region ||
+                    validationErrors.pays ||
+                    validationErrors.rue
+                      ? {
+                          marginLeft: "-20%",
+                        }
+                      : null
+                  }
                 >
                   Open Modal Adresse
                 </Button>
+                {validationErrors.numero_rue ||
+                validationErrors.ville ||
+                validationErrors.code_postal ||
+                validationErrors.region ||
+                validationErrors.pays ||
+                validationErrors.rue ? (
+                  <p
+                    style={{
+                      color: "white",
+                      width: "80%",
+                    }}
+                  >
+                    Une information manque dans l'adresse
+                  </p>
+                ) : null}
                 {adressRegister && (
                   <p>
-                    {adressRegister.numero_rue} {adressRegister.rue} <br />
-                    {adressRegister.ville} {adressRegister.code_postal}{" "}
-                    {adressRegister.region} {adressRegister.pays}
+                    {adressRegister.numero_rue}{" "}
+                    {adressRegister.rue}
+                    <br /> {adressRegister.ville}{" "}
+                    {adressRegister.code_postal} {adressRegister.region}
+                    {adressRegister.pays}
                   </p>
                 )}
               </div>
             </section>
             <section className="section-tel-pro-par section-register">
-              <div style={{ marginRight: "10px" }}>
+              <div
+                style={{
+                  marginRight: "10px",
+                }}
+              >
                 <p className="label-register">Telephone</p>
                 <input
                   type="text"
@@ -330,38 +481,46 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.numero_tel && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.numero_tel}
+                  </p>
+                )}
               </div>
               <div className="checkbox-radio-pro-par div-register-right">
                 <div className="div-checkbox-register">
                   <p className="label-register">Professionnel</p>
                   <div className="round">
                     <input
-                      type="radio"
+                      type="checkbox"
                       className="checkboxProPar"
                       name="ProParCheckbox"
                       id="proCheckbox"
-                      checked={infoRegister.professionnel_info ? true : false}
-                      value={infoRegister.professionnel_info}
-                      onChange={() => handleRadioChange("professionnel")}
+                      checked={clientRegister.is_professionnel ? true : false}
+                      value={clientRegister.is_professionnel}
+                      onChange={() =>
+                        setClientRegister((prevClient) => ({
+                          ...prevClient,
+                          is_professionnel: !prevClient.is_professionnel,
+                        }))
+                      }
                     />
-                    <label for="proCheckbox" className="proCheckbox" />
-                  </div>
-                </div>
-                <div className="div-checkbox-register">
-                  <p className="label-register" style={{ marginLeft: "10px" }}>
-                    Particulier
-                  </p>
-                  <div className="round">
-                    <input
-                      type="radio"
-                      className="checkboxProPar"
-                      name="ProParCheckbox"
-                      id="parCheckbox"
-                      checked={infoRegister.particulier_info ? true : false}
-                      value={infoRegister.particulier_info}
-                      onChange={() => handleRadioChange("particulier")}
+                    <label
+                      for="proCheckbox"
+                      className="proCheckbox"
+                      style={{
+                        backgroundColor: clientRegister.is_professionnel
+                          ? "var(--var-green)"
+                          : "",
+                        borderColor: clientRegister.is_professionnel
+                          ? "var(--var-green)"
+                          : "",
+                      }}
                     />
-                    <label for="parCheckbox" className="parCheckbox" />
                   </div>
                 </div>
               </div>
@@ -376,9 +535,6 @@ const Login = ({ cookies }) => {
                   value={password}
                   onChange={handlePasswordChange}
                 />
-                {!passwordsMatch && (
-                  <p style={{ color: "red" }}>Passwords do not match</p>
-                )}
               </div>
               <div className="div-register-right">
                 <p className="label-register">Confirmation Password</p>
@@ -390,14 +546,35 @@ const Login = ({ cookies }) => {
                   onChange={handleConfirmPasswordChange}
                 />
               </div>
-              {/* Afficher un message si les mots de passe ne correspondent pas */}
             </section>
-            <Button type="submit" className="btn-style btn-register-style">
+            {!passwordsMatch && (
+              <p
+                style={{
+                  color: "white",
+                }}
+              >
+                Le mot de passe ne sont pas identique
+              </p>
+            )}
+            {validationErrors.password_client && (
+              <p
+                style={{
+                  color: "white",
+                }}
+              >
+                {validationErrors.password_client}
+              </p>
+            )}
+            <ReCAPTCHA
+              sitekey="6Lc_qgMpAAAAAE7MCszPR2OYGtXjBQRqYZSFK1c7"
+              onChange={(val) => setCapVal(val)}
+              style={{ position: "relative", left: "5vw", top: "1vh" }}
+            />
+            <Button disabled={!capVal} type="submit" className="btn-style btn-register-style">
               Inscription
             </Button>
           </form>
         </div>
-
         {/* Login */}
         <div className="div-primary-register-login">
           <h2>Login</h2>
@@ -411,6 +588,15 @@ const Login = ({ cookies }) => {
                 value={emailLogin}
                 onChange={(e) => setEmailLogin(e.target.value)}
               />
+              {validationErrors.emailLogin && (
+                <p
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  {validationErrors.emailLogin}
+                </p>
+              )}
             </div>
             <div>
               <p className="label-login">Password</p>
@@ -440,8 +626,22 @@ const Login = ({ cookies }) => {
                   />
                 )}
               </div>
+              {validationErrors.passwordLogin && (
+                <p
+                  style={{
+                    color: "white",
+                  }}
+                >
+                  {validationErrors.passwordLogin}
+                </p>
+              )}
             </div>
-            <Button type="submit" className="btn-style btn-login-style">
+            <ReCAPTCHA
+              sitekey="6Lc_qgMpAAAAAE7MCszPR2OYGtXjBQRqYZSFK1c7"
+              onChange={(val) => setCapVal(val)}
+              style={{ position: "relative", left: "3vw", top: "1vh" }}
+            />
+            <Button disabled={!capVal} type="submit" className="btn-style btn-login-style">
               Connexion
             </Button>
           </form>
@@ -453,14 +653,11 @@ const Login = ({ cookies }) => {
         open={isModalOpen}
         onClose={handleModalClose}
         size={50}
-        style={styleModal}
+        className="modal"
       >
         <div className="modal-content">
           <h2>Adresse Client</h2>
-          <form
-            // onSubmit={(e) => handleFormSubmit(e)}
-            className="form-register-login"
-          >
+          <form className="form-adress">
             <section className="section-rue-ville section-register">
               <div>
                 <p className="label-register">Numero de Rue</p>
@@ -476,6 +673,15 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.numero_rue && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.numero_rue}
+                  </p>
+                )}
               </div>
               <div className="div-register-right">
                 <p className="label-register">Nom de la Rue</p>
@@ -491,6 +697,15 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.rue && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.rue}
+                  </p>
+                )}
               </div>
             </section>
             <section className="section-postal-region section-register">
@@ -508,6 +723,15 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.code_postal && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.code_postal}
+                  </p>
+                )}
               </div>
               <div className="div-register-right">
                 <p className="label-register">Region</p>
@@ -523,6 +747,15 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.region && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.region}
+                  </p>
+                )}
               </div>
             </section>
             <section className="section-pays-rue section-register">
@@ -540,6 +773,15 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.pays && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.pays}
+                  </p>
+                )}
               </div>
               <div className="div-register-right">
                 <p className="label-register">Ville</p>
@@ -555,10 +797,19 @@ const Login = ({ cookies }) => {
                     }))
                   }
                 />
+                {validationErrors.ville && (
+                  <p
+                    style={{
+                      color: "white",
+                    }}
+                  >
+                    {validationErrors.ville}
+                  </p>
+                )}
               </div>
             </section>
             <Button
-              className="btn-style btn-login-style"
+              className="btn-style btn-adress-style"
               onClick={() => handleModalClose()}
             >
               Close

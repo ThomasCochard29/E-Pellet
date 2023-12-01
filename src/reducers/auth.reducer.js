@@ -8,7 +8,9 @@ import {
 const initialState = {
   user: null,
   token: null,
+  role: null,
   isAuthenticated: false,
+  name: null,
 };
 
 export default function authReducer(state = initialState, action) {
@@ -18,7 +20,9 @@ export default function authReducer(state = initialState, action) {
         ...state,
         user: action.payload.user,
         token: action.payload.token,
+        role: action.payload.roleUser,
         isAuthenticated: true,
+        name: action.payload.nameUser,
       };
     case LOGIN_USER_FAILURE:
       return {
@@ -26,6 +30,8 @@ export default function authReducer(state = initialState, action) {
         isAuthenticated: false,
         user: null,
         token: null,
+        role: null,
+        name: null,
         error: action.payload,
       };
     case REGISTER_USER:
@@ -35,6 +41,8 @@ export default function authReducer(state = initialState, action) {
           ...state,
           user: action.payload.user,
           token: action.payload.token,
+          role: null,
+          name: null,
           isAuthenticated: true,
         },
       ];
@@ -43,6 +51,8 @@ export default function authReducer(state = initialState, action) {
         ...state,
         user: null,
         token: null,
+        role: null,
+        name: null,
         isAuthenticated: false, // Marquez l'utilisateur comme déconnecté
       };
     default:

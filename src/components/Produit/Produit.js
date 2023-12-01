@@ -44,7 +44,7 @@ export default function Produit() {
     <div
       className="prod-center-container"
       style={{
-        height: location.pathname === "/" ? "" : "70vh",
+        height: location.pathname === "/" ? "" : "69.5vh",
         margin: location.pathname === "/" ? "10vw 0" : "0",
       }}
     >
@@ -66,7 +66,10 @@ export default function Produit() {
           </h2>
           <section className="prod-section-img">
             <img
-              src={`http://localhost:5000/assets/${lastProduct.img_prod}`}
+              src={
+                process.env.REACT_APP_API_URL +
+                `/assets/${lastProduct.img_prod}`
+              }
               alt={lastProduct.descrip_img}
               className="prod-img"
               style={{ width: location.pathname === "/" ? "" : "50%" }}

@@ -1,6 +1,6 @@
 import { Card, CardContent, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import API from "../../../actions/api";
 
 // Image
 import IconProfessional from "../../../assets/icon/professional.png";
@@ -9,8 +9,7 @@ export default function CardPro() {
   const [userDataPro, setUserDataPro] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/client/professionnel")
+    API.get("/client/professionnel")
       .then((res) => {
         setUserDataPro(res.data);
       })

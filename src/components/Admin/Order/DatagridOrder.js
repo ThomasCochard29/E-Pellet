@@ -2,19 +2,14 @@ import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { isEmpty } from "../../Utils.js";
 import { CircularProgress } from "@mui/material";
-import axios from "axios";
-
-// Redux
-import { useSelector, useDispatch } from "react-redux";
-import { getOrder } from "../../../actions/order.action.js";
+import API from "../../../actions/api";
 
 export default function DatagridOrder() {
   //! ----------------- DATA -----------------
   const [orderData, setOrderData] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/orders")
+    API.get("/orders")
       .then((res) => {
         setOrderData(res.data);
       })
@@ -23,7 +18,7 @@ export default function DatagridOrder() {
       });
   }, []);
 
-console.log(orderData);
+  // console.log(orderData);
 
   //! ----------------- FONCTION --------------
   function getStatusText(statusId) {
@@ -77,8 +72,11 @@ console.log(orderData);
           disableRowSelectionOnClick
           disableCellSelectionOnClick
           getRowId={(row) => row.id_order}
-          pageSize={10} // Utilisez pageSize au lieu de pagination
-          pageSizeOptions={[5, 10, 25, 100]}
+          pageSize={5} // Utilisez pageSize au lieu de pagination
+          pageSizeOptions={5}
+          initialState={{
+            pagination: { paginationModel: { pageSize: 5 } },
+          }}
         />
       ) : (
         // Affichage de la DataGrid

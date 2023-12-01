@@ -1,4 +1,4 @@
-import axios from "axios";
+import API from "./api";
 
 export const SEARCH_REQUEST = "SEARCH_REQUEST";
 export const SEARCH_SUCCESS = "SEARCH_SUCCESS";
@@ -22,9 +22,7 @@ export const searchAction = (searchTerm) => {
   return async (dispatch) => {
     dispatch(searchRequest());
     try {
-      const response = await axios.get(
-        `http://localhost:5000/search?term=${searchTerm}`
-      );
+      const response = await API.get(`/search?term=${searchTerm}`);
       const results = response.data;
       dispatch(searchSuccess(results));
       return results; // Retournez les résultats de la recherche
@@ -38,9 +36,7 @@ export const searchActionCategorie = (searchTerm) => {
   return async (dispatch) => {
     dispatch(searchRequest());
     try {
-      const response = await axios.get(
-        `http://localhost:5000/search/categorie?term=${searchTerm}`
-      );
+      const response = await API.get(`/search/categorie?term=${searchTerm}`);
       const results = response.data;
       dispatch(searchSuccess(results));
       return results; // Retournez les résultats de la recherche
@@ -50,5 +46,3 @@ export const searchActionCategorie = (searchTerm) => {
     }
   };
 };
-
-

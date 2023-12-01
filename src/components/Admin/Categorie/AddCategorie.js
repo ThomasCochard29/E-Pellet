@@ -17,7 +17,6 @@ import { getCountCateg } from "../../../actions/categorie.action";
 
 // Component
 import AdminNavBar from "../AdminNavBar";
-import Search from "../Search";
 import SearchCategorie from "../SearchCategorie";
 
 export default function AddCategorie() {
@@ -73,6 +72,7 @@ export default function AddCategorie() {
             fontSize: 24,
             fontWeight: "400",
             marginLeft: "3.6%",
+            fontFamily: "Mova",
           }}
         >
           Categories : ALL ({categoryCount.categoryCount})

@@ -104,3 +104,29 @@
     transform: translate(5px, -50%);
     opacity: 1;
 }
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) {
+    .prod-center-container {
+        height: 67.5vh !important;
+    }
+
+    .prod-container {
+        width: 30%;
+    }
+
+    .prod-title {
+        font-size: 50px;
+    }
+
+    .prod-img {
+        width: 50%;
+    }
+
+    .prod-text {
+        font: 30px "Mova";
+    }
+
+    .prod-text-descrip {
+        font: 20px "Mova";
+    }
+}

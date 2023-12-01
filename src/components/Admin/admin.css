@@ -31,9 +31,9 @@
 }
 
 .logo-admin {
-    width: 5vw;
-    min-width: 2vw;
-    max-width: 10vw;
+    width: 6vw;
+    min-width: 4vw;
+    max-width: 8vw;
     margin: 2vh 0;
 }
 
@@ -196,6 +196,12 @@ a {
 }
 
 /*! ----------------- USER ----------------- */
+.section-card-user {
+    display: flex;
+    position: relative;
+    bottom: 10vh;
+}
+
 .css-1sb0z0s-MuiChartsSurface-root {
     --ChartsLegend-itemWidth: 100px;
     --ChartsLegend-itemMarkSize: 20px;
@@ -243,4 +249,23 @@ a {
 
 .card-typo-number {
     margin-bottom: 10px !important;
+}
+
+/*! ----------------- ORDER ----------------- */
+.section-card-order {
+    display: flex;
+    position: relative;
+    bottom: 10vh;
+}
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) {
+    .section-card-user {
+        display: flex;
+        position: relative;
+        bottom: 4vh;
+    }
+
+    .section-card-order {
+        bottom: 4vh;
+    }
 }

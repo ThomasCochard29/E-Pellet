@@ -5,10 +5,11 @@ import { Link, useLocation } from "react-router-dom";
 import "./navBar.css";
 
 // Image
-import logoSvg from "../../assets/Image/PEFC_Logo.png";
+import logoSvg from "../../assets/Image/Logo.png";
 import IconLogin from "../../assets/icon/icons8-utilisateur-60.png";
 import IconAdmin from "../../assets/icon/admin.png";
 import IconShoppingCart from "../../assets/icon/shopping-sac.png";
+import IconProfil from "../../assets/icon/userProfil.png"
 
 // Component
 import Logout from "../User/Logout.js";
@@ -27,6 +28,8 @@ export default function NavBar() {
     if (cartFromLocalStorage) {
       // Mettre à jour l'état local avec les produits du panier
       setCart(cartFromLocalStorage);
+    } else if (cartFromLocalStorage === "undefined") {
+      console.log("Panier vide");
     }
   }, []);
 
@@ -34,7 +37,10 @@ export default function NavBar() {
   const isAuthenticated = useSelector(
     (state) => state.authReducer.isAuthenticated
   );
-  const isAdmin = useSelector((state) => state.authReducer.user?.role_client);
+  const roleUser = useSelector((state) => state.authReducer.role);
+  // console.log("ROLE USER", roleUser);
+  const nameUser = useSelector((state) => state.authReducer.name);
+  // console.log("NAME USER", nameUser);
 
   const lienMenu = [
     {
@@ -90,7 +96,7 @@ export default function NavBar() {
       }
     >
       <Link to={"/"} className="logoNav">
-        <img src={logoSvg} alt="logo Pellet" width={70} />
+        <img src={logoSvg} alt="logo Pellet" className="nav-logo" />
       </Link>
 
       <ul style={{ alignItems: "center" }}>
@@ -105,7 +111,17 @@ export default function NavBar() {
             />
           </Link>
         )}
-        {isAuthenticated && isAdmin === "admin" && (
+        {isAuthenticated && (
+          <Link to="/profile" className="nav-link">
+            <NavLinkWithBorder isActive={location.pathname === "/login"} />
+            <img
+              src={IconProfil}
+              alt="Icon User Login"
+              style={{ width: "50px" }}
+            />
+          </Link>
+        )}
+        {isAuthenticated && roleUser === "admin" && (
           <Link to="/admin" className="nav-link">
             <NavLinkWithBorder isActive={location.pathname === "/login"} />
             <img
@@ -120,7 +136,7 @@ export default function NavBar() {
           <NavLinkWithBorder isActive={location.pathname === "/login"} />
           <img
             src={IconShoppingCart}
-            alt="Icon User Login"
+            alt="Icon Shopping Cart"
             style={{ width: "50px" }}
           />
           <div

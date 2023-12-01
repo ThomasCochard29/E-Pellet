@@ -73,7 +73,7 @@ export default function AddProduit() {
     }
   };
 
-  // Fonction pour Ajouter la Catégorie
+  // Fonction pour Ajouter le Produit
   const handleAddFormSubmit = (e) => {
     e.preventDefault();
     if (!selectedFile) {
@@ -145,6 +145,7 @@ export default function AddProduit() {
             fontSize: 24,
             fontWeight: "400",
             marginLeft: "3.6%",
+            fontFamily: "Mova"
           }}
         >
           Produits : ALL ({produitCount.produitCount})

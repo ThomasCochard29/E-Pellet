@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 // Image
-import Logo from "../../assets/Image/PEFC_Logo.png";
+import Logo from "../../assets/Image/LogoWhite.png";
 
 // Icon
 import IconProduit from "../../assets/icon/icons8-boîte-64.png";
@@ -18,7 +18,7 @@ export default function AdminNavBar() {
 
   const handleSubMenuClick = (id) => {
     if (activeSubMenu === id) {
-      setActiveSubMenu(null);
+      setActiveSubMenu(null); 
     } else {
       setActiveSubMenu(id);
     }

@@ -1,6 +1,6 @@
 /*! ----------------- Color Var ----------------- */
 :root {
-    --var-green: rgba(116, 154, 112, 1);
+    --var-green: hwb(114 44% 40%);
     --var-cream: rgba(197, 178, 159, 1);
     --var-brown: rgba(120, 86, 55, 1);
     --var-white: rgba(255, 255, 255, 1);
@@ -11,7 +11,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 70vh;
+    height: 69.5vh;
+    font-family: "Mova";
 }
 
 .section-primary-register-login {
@@ -31,6 +32,147 @@
 
 h2 {
     color: var(--var-white);
+}
+
+/*? Profile */
+.div-body-profile {
+    align-items: center;
+    height: 69.5vh;
+    font-family: "Mova";
+}
+
+select {
+    /* Reset Select */
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: var(--var-brown);
+    background-color: var(--var-cream);
+    background-image: none;
+    cursor: pointer;
+    font-family: "Mova";
+    font-size: 14px;
+}
+
+/* Remove IE arrow */
+select::-ms-expand {
+    display: none;
+}
+
+/* Custom Select wrapper */
+.select {
+    position: relative;
+    display: flex;
+    width: 14em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+    margin-bottom: 2vh;
+}
+
+/* Arrow */
+.select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: var(--var-brown);
+    transition: .25s all ease;
+    pointer-events: none;
+    color: var(--var-cream);
+}
+
+/* Transition */
+.select:hover::after {
+    color: var(--var-green);
+}
+
+.order-container {
+    max-height: auto;
+    /* Hauteur maximale auto par défaut */
+    overflow: hidden;
+    /* Masquez le débordement */
+}
+
+.order-container.scrollable {
+    max-height: 300px;
+    /* Définissez la hauteur maximale souhaitée ici */
+    overflow-y: scroll;
+    /* Activez le défilement vertical */
+}
+
+.card-order {
+    transform-origin: 0 0;
+    padding: 10px 20px;
+    background: linear-gradient(153deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0) 100%);
+    backdrop-filter: blur(20px);
+    margin-bottom: 10px;
+    margin-right: 4vw;
+}
+
+.order-text-content {
+    display: flex;
+}
+
+.order-text:not(:first-child) {
+    margin-left: 2vw;
+}
+
+.text-order {
+    color: var(--var-brown);
+}
+
+.shopping-cart-body {
+    width: 100%;
+}
+
+.titre-moncompte {
+    position: relative;
+    top: 10vh;
+    font: 40px "Mova";
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+}
+
+.button-profile {
+    display: block;
+    width: 16vw;
+    text-align: center;
+    font-size: 16px;
+    color: white;
+    padding: 10px;
+    line-height: 1;
+    position: relative;
+    font-weight: 700;
+    border: none;
+    padding-right: 20px;
+    border-radius: 100px;
+    margin: 10px 0px;
+    transition: 0.3s;
+}
+
+.button-profile-update {
+    background-color: var(--var-green);
+}
+
+.button-profile-update:hover {
+    border-radius: 0;
+    bottom: 0.2vh;
+    filter: drop-shadow(-2px 4px 0px rgb(95, 127, 92));
+}
+
+.button-profile-desac {
+    background-color: rgb(204, 0, 0);
+}
+
+.button-profile-desac:hover {
+    border-radius: 0;
+    bottom: 0.2vh;
+    filter: drop-shadow(-2px 4px 0px rgb(170, 0, 0));
 }
 
 /*? Login */
@@ -98,16 +240,7 @@ h2 {
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-
-.checkbox-radio-pro-par {
-    position: relative;
-    top: 10px;
-    display: flex;
-}
-
-.div-checkbox-register .parCheckbox {
-    margin-left: 8px;
+    margin-left: 3vw;
 }
 
 .section-password .div-register-right .input-register::placeholder,
@@ -116,13 +249,13 @@ h2 {
     font-size: 12px;
 }
 
-.div-checkbox-register .round .checkboxProPar[type="radio"] {
+.div-checkbox-register .round .checkboxProPar[type="checkbox"] {
     visibility: hidden;
 }
 
-.div-checkbox-register .round .checkboxProPar[type="radio"]:checked+label {
-    background-color: var(--var-green);
-    border-color: var(--var-green);
+.div-checkbox-register .round .checkboxProPar[type="checkox"]:checked+label {
+    background-color: var(--var-green) !important;
+    border-color: var(--var-green) !important;
 }
 
 .btn-style {
@@ -186,4 +319,95 @@ h2 {
 
 .img-eye-password {
     width: 40px;
+}
+
+.modal {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    box-shadow: 24 !important;
+    text-align: center !important;
+    background-color: var(--var-cream) !important;
+    height: 70% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.form-adress {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    place-content: center;
+}
+
+.btn-adress-style {
+    color: var(--var-cream) !important;
+    background-color: var(--var-brown) !important;
+}
+
+.btn-adress-style:hover {
+    background-color: var(--var-green) !important;
+}
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) {
+    .div-body {
+        height: 67.5vh;
+    }
+
+    /*? Login */
+    .label-login {
+        font-size: 20px;
+    }
+
+    .input-login {
+        height: 20px;
+    }
+
+    .input-login::placeholder {
+        font-size: 14px;
+    }
+
+    /*? Register */
+    .label-register {
+        font-size: 16px;
+    }
+
+    .input-register {
+        height: 10px;
+    }
+
+    .input-register::placeholder {
+        font-size: 12px;
+    }
+
+    .section-email-adresse {
+        margin-bottom: -4vh;
+    }
+
+    .div-checkbox-register:nth-child(1) {
+        margin-right: 14px;
+    }
+
+    .btn-style {
+        font-size: 12px !important;
+        padding: 10px 80px !important;
+    }
+
+    .btn-modal-adress-style {
+        font-size: 10px !important;
+        padding: 8px 45px !important;
+    }
+
+    /*? Password Icon */
+    .div-show-hide-password {
+        bottom: 4.6vh;
+        left: 22vw;
+    }
+
+    .img-eye-password {
+        width: 30px;
+        height: 25px
+    }
 }

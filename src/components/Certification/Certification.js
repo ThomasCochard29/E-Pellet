@@ -8,13 +8,12 @@ import certifImg from "../../assets/Image/PEFC_Logo.png";
 import { useLocation } from "react-router-dom";
 
 export default function Certification() {
-  const widthImg = 200;
   const location = useLocation();
 
   return (
     <div
       className="certif-center-container"
-      style={{ height: location.pathname === "/" ? "" : "70vh" }}
+      style={{ height: location.pathname === "/" ? "" : "69.5vh" }}
     >
       <div
         className="certif-container"
@@ -27,30 +26,10 @@ export default function Certification() {
       >
         <h2 className="certif-title">Certification</h2>
         <section className="certif-section">
-          <img
-            src={certifImg}
-            alt="logo Pellet"
-            width={widthImg}
-            className="certif-img"
-          />
-          <img
-            src={certifImg}
-            alt="logo Pellet"
-            width={widthImg}
-            className="certif-img"
-          />
-          <img
-            src={certifImg}
-            alt="logo Pellet"
-            width={widthImg}
-            className="certif-img"
-          />
-          <img
-            src={certifImg}
-            alt="logo Pellet"
-            width={widthImg}
-            className="certif-img"
-          />
+          <img src={certifImg} alt="logo Pellet" className="certif-img" />
+          <img src={certifImg} alt="logo Pellet" className="certif-img" />
+          <img src={certifImg} alt="logo Pellet" className="certif-img" />
+          <img src={certifImg} alt="logo Pellet" className="certif-img" />
         </section>
       </div>
     </div>

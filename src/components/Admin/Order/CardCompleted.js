@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
-import axios from "axios";
+import API from "../../../actions/api";
 
 // Image
 import IconOrderComplete from "../../../assets/icon/order-completed.png";
@@ -11,8 +11,7 @@ export default function CardCompleted() {
   const [orderCountCompletedData, setOrderCountCompletedData] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/order/count/completed")
+    API.get("/order/count/completed")
       .then((res) => {
         setOrderCountCompletedData(res.data);
       })

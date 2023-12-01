@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import API from "../../actions/api";
+import { loadStripe } from "@stripe/stripe-js";
 
 // CSS
 import "./shoppingCart.css";
@@ -13,149 +15,214 @@ import Tiret from "../../assets/icon/tiret.png";
 import { useSelector } from "react-redux";
 
 export default function ShoppingCart() {
+  const [professionnel, setProfessionnel] = useState(null);
+  const [refresh, setRefresh] = useState(false);
+
   const isAuthenticated = useSelector(
     (state) => state.authReducer.isAuthenticated
   );
 
+  const userId = useSelector((state) => state.authReducer.user?.userId);
+  // console.log("USER ID :", userId);
+
+  const professionnelTrue = () => {
+    if (userId) {
+      API.get(`/client/${userId}`)
+        .then((res) => {
+          setProfessionnel(res.data);
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la récupération des données :", error);
+        });
+    }
+  };
+
+  useEffect(() => {
+    professionnelTrue();
+  }, []);
+
+  // console.log(professionnel?.data.is_professionnel);
+
   // État local pour stocker les produits du panier
   const [cart, setCart] = useState([]);
 
-  useEffect(() => {
-    // Récupérer le panier depuis le stockage local
-    const cartFromLocalStorage = JSON.parse(localStorage.getItem("panier"));
+  const loadCart = async () => {
+    try {
+      const cartData = await localStorage.getItem("panier");
 
-    if (cartFromLocalStorage) {
-      // Mettre à jour l'état local avec les produits du panier
-      setCart(cartFromLocalStorage);
-    }
-  }, []);
-
-  // console.log(cart);
-
-  // Fonction pour calculer la quantité de chaque produit dans le panier
-  const calculateProductQuantity = (productId) => {
-    const productQuantity = cart.reduce((total, product) => {
-      if (product.id_prod === productId) {
-        return total + 1;
+      if (cartData !== null) {
+        const parsedCart = JSON.parse(cartData);
+        setCart(parsedCart);
       }
-      return total;
-    }, 0);
-    return productQuantity;
+      console.log("panier récupérer");
+    } catch (error) {
+      console.error("Erreur lors du chargement du panier : ", error);
+    }
   };
+
+  const syncCart = async () => {
+    const updatedCart = {
+      userId: userId,
+      cartItems: JSON.parse(localStorage.getItem("panier")),
+    };
+
+    // console.log(updatedCart);
+
+    await API.post(`/cart/sync`, updatedCart)
+      .then((res) => console.log(res.data))
+      .catch((error) => console.error(error));
+  };
+
+  useEffect(() => {
+    loadCart();
+    if (isAuthenticated) {
+      syncCart();
+    }
+  }, [refresh]);
 
   // console.log(cart);
 
   // Fonction pour supprimer un article du panier
-  const removeProductFromCart = (productId) => {
-    const productIndex = cart.findIndex(
-      (product) => product.id_prod === productId
-    );
+  const removeProductFromCart = async (produit) => {
+    try {
+      const productIndex = cart.findIndex(
+        (product) => product.id_prod === produit.id_prod
+      );
 
-    if (productIndex !== -1) {
-      const updatedCart = [...cart];
-      updatedCart.splice(productIndex, 1);
-      setCart(updatedCart);
+      if (productIndex !== -1) {
+        const panierExist = await localStorage.getItem("panier");
+        const panier = panierExist ? JSON.parse(panierExist) : [];
 
-      // Mettre à jour le panier dans le stockage local
-      localStorage.setItem("panier", JSON.stringify(updatedCart));
-      window.location.reload();
+        // Vérifiez si la quantité est supérieure à 1, puis décrémentez-la
+        if (panier[productIndex].quantity > 1) {
+          panier[productIndex].quantity -= 1;
+        } else {
+          // Si la quantité est égale à 1, retirez complètement le produit du panier
+          panier.splice(productIndex, 1);
+        }
+
+        localStorage.setItem("panier", JSON.stringify(panier));
+        setCart(panier);
+        setRefresh(!refresh);
+        console.info("Moins 1");
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la suppression du produit du panier : ",
+        error
+      );
     }
   };
-
   // Fonction pour ajouter un produit au panier local storage
-  const addToCart = (produit) => {
-    const productIndex = cart.findIndex(
-      (product) => product.id_prod === produit.id_prod
-    );
-    // console.log(productIndex);
+  const addToCart = async (produit) => {
+    try {
+      const productIndex = cart.findIndex(
+        (product) => product.id_prod === produit.id_prod
+      );
 
-    if (productIndex !== -1) {
-      // Récupérez le panier existant du stockage local (s'il existe)
-      const panierExist = localStorage.getItem("panier");
-      const panier = panierExist ? JSON.parse(panierExist) : [];
+      if (productIndex !== -1) {
+        const panierExist = await localStorage.getItem("panier");
+        const panier = panierExist ? JSON.parse(panierExist) : [];
 
-      // Ajoutez le produit actuel au panier
-      panier.push(produit);
+        // Incrémentez la quantité du produit existant
+        panier[productIndex].quantity += 1;
 
-      // Enregistrez le panier mis à jour dans le stockage local
-      localStorage.setItem("panier", JSON.stringify(panier));
-      window.location.reload();
+        localStorage.setItem("panier", JSON.stringify(panier));
+        setCart(panier);
+        setRefresh(!refresh);
+        console.info("Plus 1");
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'ajout au panier : ", error);
     }
-  };
-
-  // Fonction pour calculer le sous-total
-  const calculateSubtotal = () => {
-    let subtotal = 0;
-    for (const product of cart) {
-      subtotal += product.prix_prod;
-    }
-    return subtotal;
-  };
-
-  // Fonction pour calculer le total (sous-total + frais de livraison)
-  const calculateTotal = () => {
-    const subtotal = calculateSubtotal();
-    // Ajoutez ici les frais de livraison si nécessaire
-    const fraisLivraison = 0; // Vous pouvez définir les frais de livraison ici
-    return subtotal + fraisLivraison;
   };
 
   // Filtrer les produits uniques dans le panier
   const uniqueCart = Array.from(
-    new Set(cart.map((product) => product.id_prod))
+    new Set(cart?.map((product) => product.id_prod))
   ).map((id) => cart.find((product) => product.id_prod === id));
 
+  // Calcul du subtotal
+  const subtotal = cart.reduce((acc, item) => {
+    return acc + item.prix_prod * item.quantity;
+  }, 0);
+
+  // Calcul des frais de livraison (modifiable en fonction de votre logique)
+  const fraisDeLivraison = 20; // Remplacez ceci par votre logique de calcul des frais de livraison
+
+  // Calcul du total final
+  const totalFinal = subtotal + fraisDeLivraison;
+
+  // console.log(uniqueCart);
+
+  // Stripe
+  const makePayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51NryosCFE5X3Slec1Tk2ADIscxKuhYGPiEfI88mT3zMdOTFN2HldCJF6agMD91Ki9adn5oVLXOpFnfv0xLXIVMZP00rX0FeFCP"
+    );
+
+    const body = {
+      products: uniqueCart,
+    };
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const response = await fetch(
+      process.env.REACT_APP_API_URL + "/create-checkout-session",
+      {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify(body),
+      }
+    );
+
+    const session = await response.json();
+
+    const result = stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.log(result.error);
+    }
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        placeContent: "center",
-        height: "70vh",
-        flexWrap: "wrap",
-        color: "white",
-      }}
-    >
-      <section style={{ width: "70%", display: "flex" }}>
+    <div className="shopping-cart-body">
+      <section className="shopping-cart-section">
         {/* Shopping Cart Content */}
-        <div style={{ flex: "1", padding: "10px" }}>
+        <div className="cart-div">
           <h1>Panier</h1>
           {cart.length === 0 ? (
             <div>
-              <p
-                style={{
-                  fontSize: "28px",
-                  color: "var(--var-brown)",
-                  fontWeight: "600",
-                }}
-              >
+              <p className="cart-length-null">
                 Vous n'avez aucun produit dans votre panier !
               </p>
             </div>
           ) : (
             uniqueCart.map((product, index) => (
               <>
-                <section key={index} style={{ display: "flex" }}>
+                <section key={index} className="cart-section">
                   <img
-                    src={`http://localhost:5000/assets/${product.img_prod}`}
+                    src={
+                      process.env.REACT_APP_API_URL +
+                      `/assets/${product.img_prod}`
+                    }
                     alt="Produit Card"
-                    width={100}
-                    style={{ margin: "10px 10px", objectFit: "scale-down" }}
+                    className="cart-section-img"
                   />
-                  <section style={{ display: "flex" }}>
-                    <div>
-                      <h3 style={{ fontWeight: "normal" }}>
-                        {product.nom_prod}
-                      </h3>
-                      <p style={{ fontSize: "16px" }}>{product.descrip_prod}</p>
-                      <p style={{ fontSize: "16px" }}>
-                        Quantity : {calculateProductQuantity(product.id_prod)}
-                      </p>
+                  <section className="cart-section-descrip">
+                    <div className="cart-div-left">
+                      <h3>{product.nom_prod}</h3>
+                      <p>{product.descrip_prod}</p>
+                      <p>Quantity : {product.quantity}</p>
                       <button
                         style={{
                           backgroundColor: "transparent",
                           border: "none",
                         }}
-                        onClick={() => removeProductFromCart(product.id_prod)}
+                        onClick={() => removeProductFromCart(product)}
                       >
                         <img
                           src={CartTrash}
@@ -177,9 +244,25 @@ export default function ShoppingCart() {
                         />
                       </button>
                     </div>
-                    <div style={{ position: "absolute", right: "46vw" }}>
-                      <p style={{ fontSize: "16px" }}>{product.prix_prod} €</p>
-                    </div>
+                    <section>
+                      <div style={{ position: "absolute", right: "46vw" }}>
+                        <p style={{ fontSize: "16px" }}>
+                          {product.prix_prod} €
+                        </p>
+                      </div>
+                      <div
+                        style={{
+                          position: "absolute",
+                          right: "46vw",
+                          marginTop: "2vw",
+                        }}
+                      >
+                        <p style={{ fontSize: "16px" }}>
+                          Prix total :{" "}
+                          {(product.prix_prod * product.quantity).toFixed(2)} €
+                        </p>
+                      </div>
+                    </section>
                   </section>
                 </section>
                 <hr style={{ border: "var(--var-brown) 1px solid" }} />
@@ -199,7 +282,7 @@ export default function ShoppingCart() {
               }}
             >
               <p>Sous-Total</p>
-              {calculateSubtotal() === 0 ? (
+              {subtotal === 0 ? (
                 <img
                   src={Tiret}
                   style={{
@@ -217,7 +300,7 @@ export default function ShoppingCart() {
                     right: "16vw",
                   }}
                 >
-                  {calculateSubtotal().toFixed(2) + " EU€"}
+                  {subtotal.toFixed(2) + " EU€"}
                 </p>
               )}
             </div>
@@ -231,7 +314,13 @@ export default function ShoppingCart() {
                 Frais estimés de prise
                 <br /> en charge et d'expédition
               </p>
-              <p style={{ position: "absolute", right: "16vw" }}>Gratuit</p>
+              {professionnel?.data.is_professionnel ? (
+                <p style={{ position: "absolute", right: "16vw" }}>Gratuit</p>
+              ) : (
+                <p style={{ position: "absolute", right: "16vw" }}>
+                  {fraisDeLivraison} €
+                </p>
+              )}
             </div>
             <section>
               <hr
@@ -244,13 +333,13 @@ export default function ShoppingCart() {
                 }}
               >
                 <p>Total</p>
-                {calculateTotal() === 0 ? (
+                {subtotal === 0 ? (
                   <img
                     src={Tiret}
                     style={{
                       position: "absolute",
                       right: "15.7vw",
-                      top: isAuthenticated ? "45.9vh" : "49.5vh",
+                      top: isAuthenticated ? "47.4vh" : "49.5vh",
                     }}
                     width={40}
                     alt=""
@@ -262,7 +351,7 @@ export default function ShoppingCart() {
                       right: "16vw",
                     }}
                   >
-                    {calculateSubtotal().toFixed(2) + " EU€"}
+                    {totalFinal.toFixed(2) + " EU€"}
                   </p>
                 )}
               </div>
@@ -278,7 +367,9 @@ export default function ShoppingCart() {
               }}
             >
               {isAuthenticated ? (
-                <button className="button">Commander</button>
+                <button className="button" onClick={makePayment}>
+                  Commander
+                </button>
               ) : (
                 <Link to="/login">
                   <button className="button">Connexion</button>

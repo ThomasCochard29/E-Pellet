@@ -7,9 +7,7 @@ import SearchImg from "../../assets/icon/icons8-search-32.png";
 
 // Redux
 import { useDispatch } from "react-redux";
-import {
-  searchAction,
-} from "../../actions/search.action";
+import { searchAction } from "../../actions/search.action";
 
 export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -51,14 +49,6 @@ export default function Search() {
       .catch((error) => {
         console.error(error);
       });
-
-    // dispatch(searchActionCategorie(newSearchTerm))
-    //   .then((results) => {
-    //     setSearchResults(results);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
   };
 
   // console.log(searchResults);
@@ -120,8 +110,16 @@ export default function Search() {
                   {result.nom_prod} | {result.prix_prod} € |
                   {result.descrip_prod} |
                   <img
-                    src={`http://localhost:5000/assets/${result.img_prod}`}
+                    src={
+                      process.env.REACT_APP_API_URL +
+                      `/assets/${result.img_prod}`
+                    }
                     width={"60px"}
+                    alt={
+                      result.length === "0"
+                        ? "Produit Détail Picture"
+                        : result.descrip_img
+                    }
                   />
                 </Link>
               </li>

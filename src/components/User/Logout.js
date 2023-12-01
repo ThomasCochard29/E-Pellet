@@ -23,7 +23,7 @@ const LogoutButton = ({ cookies }) => {
   const handleLogout = () => {
     dispatch(logoutUser());
 
-    console.log("deconnection");
+    console.log("Deconnection");
 
     removeCookie("access_token"); // Supprimez le cookie "access_token"
     if (location.pathname !== "/") navigate("/");

@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
+import API from "../../../actions/api";
 
 // Image
 import IconOrderRefund from "../../../assets/icon/remboursement.png";
-import axios from "axios";
 
 export default function CardRefund() {
   //! ----------------- DATA -----------------
   const [orderCountRefundData, setOrderCountRefundData] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/order/count/refund")
+    API.get("/order/count/refund")
       .then((res) => {
         setOrderCountRefundData(res.data);
       })

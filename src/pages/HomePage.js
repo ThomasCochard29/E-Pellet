@@ -9,7 +9,6 @@ import Certification from "../components/Certification/Certification.js";
 import Contact from "../components/Contact/Contact.js";
 
 export default function HomePage() {
-
   return (
     <>
       <Carousel />

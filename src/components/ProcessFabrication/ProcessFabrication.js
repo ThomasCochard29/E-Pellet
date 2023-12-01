@@ -8,13 +8,12 @@ import "./processFabrication.css";
 import processFab from "../../assets/Image/processFab.png";
 
 export default function ProcessFabrication() {
-  const widthImg = 220;
   const location = useLocation();
 
   return (
     <div
       className="process-center-container"
-      style={{ height: location.pathname === "/" ? "" : "70vh" }}
+      style={{ height: location.pathname === "/" ? "" : "69.5vh" }}
     >
       <div
         className="process-container"
@@ -27,33 +26,13 @@ export default function ProcessFabrication() {
       >
         <h2 className="process-title">Processus de Fabrication</h2>
         <section className="process-section">
-          <img
-            src={processFab}
-            alt="logo Pellet"
-            width={widthImg}
-            className="process-img"
-          />
+          <img src={processFab} alt="logo Pellet" className="process-img" />
           <hr className="process-hr" />
-          <img
-            src={processFab}
-            alt="logo Pellet"
-            width={widthImg}
-            className="process-img"
-          />
+          <img src={processFab} alt="logo Pellet" className="process-img" />
           <hr className="process-hr" />
-          <img
-            src={processFab}
-            alt="logo Pellet"
-            width={widthImg}
-            className="process-img"
-          />
+          <img src={processFab} alt="logo Pellet" className="process-img" />
           <hr className="process-hr" />
-          <img
-            src={processFab}
-            alt="logo Pellet"
-            width={widthImg}
-            className="process-img"
-          />
+          <img src={processFab} alt="logo Pellet" className="process-img" />
         </section>
       </div>
     </div>

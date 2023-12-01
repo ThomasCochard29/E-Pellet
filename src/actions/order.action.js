@@ -1,4 +1,4 @@
-import axios from "axios";
+import API from "./api";
 
 export const GET_ORDER = "GET_ORDER";
 export const GET_COUNT_ORDER_CONFIRMED = "GET_COUNT_ORDER_CONFIRMED";
@@ -9,7 +9,7 @@ export const ADD_ORDER = "ADD_ORDER";
 
 export const getOrder = () => {
   return (dispatch) => {
-    return axios.get("http://localhost:5000/orders").then((res) => {
+    return API.get("/orders").then((res) => {
       const orders = res.data;
       const statuses = [];
 
@@ -27,41 +27,40 @@ export const getOrder = () => {
 
 export const getCountOrderConfirmed = () => {
   return (dispatch) => {
-    return axios
-      .get("http://localhost:5000/order/count/confirmed")
-      .then((res) => dispatch({ type: GET_COUNT_ORDER_CONFIRMED, payload: res.data }));
+    return API.get("/order/count/confirmed").then((res) =>
+      dispatch({ type: GET_COUNT_ORDER_CONFIRMED, payload: res.data })
+    );
   };
 };
 
 export const getCountOrderCompleted = () => {
   return (dispatch) => {
-    return axios
-      .get("http://localhost:5000/order/count/completed")
-      .then((res) => dispatch({ type: GET_COUNT_ORDER_COMPLETED, payload: res.data }));
+    return API.get("/order/count/completed").then((res) =>
+      dispatch({ type: GET_COUNT_ORDER_COMPLETED, payload: res.data })
+    );
   };
 };
 
 export const getCountOrderCancel = () => {
   return (dispatch) => {
-    return axios
-      .get("http://localhost:5000/order/count/cancel")
-      .then((res) => dispatch({ type: GET_COUNT_ORDER_CANCEL, payload: res.data }));
+    return API.get("/order/count/cancel").then((res) =>
+      dispatch({ type: GET_COUNT_ORDER_CANCEL, payload: res.data })
+    );
   };
 };
 
 export const getCountOrderRefund = () => {
   return (dispatch) => {
-    return axios
-      .get("http://localhost:5000/order/count/refund")
-      .then((res) => dispatch({ type: GET_COUNT_ORDER_REFUND, payload: res.data }));
+    return API.get("/order/count/refund").then((res) =>
+      dispatch({ type: GET_COUNT_ORDER_REFUND, payload: res.data })
+    );
   };
 };
 
-
 export const addOrder = (data) => {
   return (dispatch) => {
-    return axios
-      .post("http://localhost:5000/order/add", data)
-      .then((res) => dispatch({ type: ADD_ORDER, payload: data }));
+    return API.post("/order/add", data).then((res) =>
+      dispatch({ type: ADD_ORDER, payload: data })
+    );
   };
 };

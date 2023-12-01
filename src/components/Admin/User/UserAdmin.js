@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
-import axios from "axios";
+import API from "../../../actions/api";
 
 // CSS
 import "../admin.css";
@@ -18,8 +18,7 @@ export default function UserAdmin() {
   const [userDataPar, setUserDataPar] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/client/professionnel")
+    API.get("/client/professionnel")
       .then((res) => {
         setUserDataPro(res.data);
       })
@@ -27,8 +26,7 @@ export default function UserAdmin() {
         console.error("Erreur lors de la récupération des données :", error);
       });
 
-    axios
-      .get("http://localhost:5000/client/particulier")
+    API.get("/client/particulier")
       .then((res) => {
         setUserDataPar(res.data);
       })
@@ -54,7 +52,7 @@ export default function UserAdmin() {
 
         {/* Card Customer */}
         <section
-          style={{ display: "flex", position: "relative", bottom: "10%" }}
+          className="section-card-user"
         >
           {/* All Customers */}
           <CardAllClient />

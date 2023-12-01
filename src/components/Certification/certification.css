@@ -43,4 +43,24 @@
 
 .certif-img {
     margin-right: 4%;
+    width: 200px;
+}
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) {
+    .certif-center-container {
+        height: 67.5vh !important;
+    }
+
+    .certif-container {
+        width: 40%;
+    }
+
+    .certif-title {
+        font-size: 50px;
+    }
+
+    .certif-img {
+        width: 160px;
+    }
+
 }

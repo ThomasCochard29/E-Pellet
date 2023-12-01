@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, Typography } from "@mui/material";
-import axios from "axios";
+import API from "../../../actions/api";
 
 // Image
 import IconOrderCanceled from "../../../assets/icon/cancel-order.png";
@@ -10,8 +10,7 @@ export default function CardCancel() {
   const [orderCountCancelData, setOrderCountCancelData] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/order/count/cancel")
+    API.get("/order/count/cancel")
       .then((res) => {
         setOrderCountCancelData(res.data);
       })

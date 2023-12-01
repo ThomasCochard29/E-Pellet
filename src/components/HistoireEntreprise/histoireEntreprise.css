@@ -41,3 +41,21 @@
     -moz-background-clip: text;
     background-clip: text;
 }
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) {
+    .he-center-container {
+        margin-bottom: 7.5vw;
+    }
+    
+    .he-container {
+        width: 30%;
+    }
+
+    .he-title {
+        font-size: 50px;
+    }
+
+    .he-text {
+        font: 30px "Mova";
+    }
+}
